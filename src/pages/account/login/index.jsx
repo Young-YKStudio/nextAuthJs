@@ -104,7 +104,7 @@ const Login = ({providers}) => {
         <div className='flex flex-col items-center gap-2 mt-2'>
           <button className='bg-indigo-500 text-white rounded-md hover:bg-indigo-700 py-2 w-full mb-2' onClick={submitHandler}>Login</button>
           <p className='text-xs'>Don't have an account? <button onClick={() => redirectToRegister()} className='font-bold hover:text-indigo-500'>Register</button></p>
-          <p className='text-xs'>Forgot password?<a href='/login/forgotpassword' className='hover:text-indigo-500 font-bold'> Password Reset</a></p>
+          <p className='text-xs'>Forgot password?<a href='/account/forgotpassword' className='hover:text-indigo-500 font-bold'> Password Reset</a></p>
         </div>
       </div>
     </div>
