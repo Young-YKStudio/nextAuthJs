@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Router from 'next/router'
 import { signIn } from 'next-auth/react'
 
@@ -38,8 +38,19 @@ const Register = () => {
   }
 
   const submitHandler = async () => {
-    const request = await axios.post('/api/account/register', registerForm)
-    console.log(request)
+    try {
+      const request = await axios.post('/api/account/register', registerForm)
+      if(request.data) {
+        // save user in redux
+        // redirect to home
+        // login
+        await loginUser()
+        console.log(request.data, 'after registered')
+      }
+    } catch (err) {
+      console.log(err.response)
+      // modal to show error
+    }
   }
 
   return (
