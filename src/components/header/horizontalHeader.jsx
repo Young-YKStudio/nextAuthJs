@@ -45,14 +45,14 @@ const HorizontalHeader = ({path}) => {
           { session ? 
             <button
               onClick={() => signOut()}
-              className='hover:bg-white/50 px-4 py-2 rounded-md flex items-center'
+              className='hover:bg-indigo-400/50 px-4 py-2 rounded-md flex items-center'
             >
               <MdLogout className='mr-2 w-5 h-5'/>Logout
             </button>
             :
             <NextLink 
               href='/account/login'
-              className="hover:bg-white/50 px-4 py-2 rounded-md flex items-center"
+              className="hover:bg-indigo-400/50 px-4 py-2 rounded-md flex items-center"
             >
               <MdLogin className='mr-2 w-5 h-5' />Login
             </NextLink>

@@ -13,7 +13,8 @@ const Login = ({providers}) => {
   
   const { email, password } = loginForm
   const { session, status } = useSession()
-  console.log(status, 'login page')
+
+  console.log(providers)
 
   const formChangeHandler = (e) => {
     setLoginForm((prev) => ({
@@ -38,8 +39,8 @@ const Login = ({providers}) => {
       return <button
         className='w-full border-2 border-transparent flex items-center justify-center bg-white py-2 rounded-lg hover:border-indigo-500'
         onClick={() => {
-          signIn(obj.id, {
-            callbackUrl: '/'
+          signIn('google', {
+            callbackUrl: '/account/login'
           })
         }}
       >
@@ -59,15 +60,18 @@ const Login = ({providers}) => {
       redirect: false,
       email: email,
       password: password,
-      callbackUrl: '/'
+      callbackUrl: '/account/login'
     })
 
     request.error ? console.log(request.error) : redirectToHome()
   }
 
-  // if(status === 'authenticated') {
-  //   redirectToHome()
-  // }
+  if(status === 'authenticated') {
+    // redirectToHome()
+    console.log(session, 'success!')
+  } else {
+    console.log('unauth')
+  }
 
   return (
     <div className='bg-indigo-100 w-screen h-screen flex justify-center items-center text-indigo-900'>

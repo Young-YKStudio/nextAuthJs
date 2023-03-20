@@ -9,7 +9,7 @@ export default function App({ Component, pageProps: {session, ...pageProps} }) {
 
   const styleDistributor = (path) => {
     if(path.includes('/dashboard')) {
-      return 'flex flex-row'
+      return 'flex flex-row flex-nowrap'
     } else {
       return 'flex flex-col'
     }

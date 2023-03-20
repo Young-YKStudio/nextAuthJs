@@ -1,4 +1,6 @@
-- [ ] Dashboard
+- [x] Dashboard
+- [x] GoogleAuth로 로그인시 redirect 문제 있음 (DB 문제였음 해결됨)
+- [ ] if Session, redirect pages
 - [ ] Redux setup
 - [ ] Redux - loading
 - [ ] Redux - aleart

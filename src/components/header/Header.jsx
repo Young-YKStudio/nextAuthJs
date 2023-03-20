@@ -5,9 +5,9 @@ const Header = ({path, session}) => {
 
   const HeaderDistributor = () => {
     if(path.includes('/dashboard')) {
-      return <VerticalHeader />
+      return <VerticalHeader path={path} />
     } else {
-      return <HorizontalHeader path={path} session={session} />
+      return <HorizontalHeader path={path} />
     }
   }
   return (

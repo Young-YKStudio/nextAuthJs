@@ -51,7 +51,6 @@ mongodb: 5.1.0
 mongoose: 7.0.1
 next: 13.2.4
 next-auth: 4.20.1
-typescript: 4.9.5
 tailwindcss: 3.2.7
 nodemailer: 6.9.1
 react-redux: 8.0.5

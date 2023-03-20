@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next"
+import NextAuth from "next-auth"
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from "next-auth/providers/credentials"
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
@@ -58,7 +58,7 @@ export default NextAuth({
     })
   ],
   pages: {
-    signIn: '/login',
+    signIn: '/account/login',
   },
   debug: process.env.NODE_ENV === 'development',
   adapter: MongoDBAdapter(clientPromise),
