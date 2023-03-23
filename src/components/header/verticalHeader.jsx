@@ -128,12 +128,12 @@ const VerticalHeader = ({path}) => {
               >
                 <MdClose />
               </button>
-              <a 
+              <NextLink 
                 href='/dashboard/account'
                 className='flex flex-row flex-nowrap items-center gap-2 px-3 py-2 hover:bg-indigo-800 hover:text-indigo-100 rounded-md'
               >
                 <MdAccountCircle className='w-5 h-5'/>Account
-              </a>
+              </NextLink>
               <button 
                 className='flex flex-row flex-nowrap items-center gap-2 px-3 py-2 hover:bg-indigo-800 hover:text-indigo-100 rounded-md'
                 onClick={() => signOut()}
