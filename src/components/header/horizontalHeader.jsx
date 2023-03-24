@@ -1,11 +1,15 @@
 import { links } from '../../../data/navigations'
 import { signOut, signIn, useSession } from 'next-auth/react'
 import NextLink from 'next/link'
-import { MdLogin, MdLogout, MdMenu, MdClose } from 'react-icons/md'
+import { MdLogin, MdLogout, MdMenu, MdClose, MdShoppingCart } from 'react-icons/md'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSelector } from 'react-redux'
 
 const HorizontalHeader = ({path}) => {
+  const { cartItems } = useSelector((state) => state.cart)
+
+  // console.log(cartItems, 'from header')
 
   const { data: session } = useSession()
   const [ isMenuOpen, setIsMenuOpen ] = useState(false);
@@ -23,7 +27,7 @@ const HorizontalHeader = ({path}) => {
   }
 
 
-  console.log(session, 'from header session')
+  // console.log(session, 'from header session')
 
   return (
     <>
@@ -42,6 +46,12 @@ const HorizontalHeader = ({path}) => {
               {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
             </NextLink>
           })}
+          <NextLink
+            href='/cart'
+            className='flex items-center gap-2 px-4 py-2 rounded-md hover:bg-indigo-400/50'
+          >
+            <MdShoppingCart className='w-5 h-5'/> Cart {cartItems.length > 0 && <span className='absolute top-[0.85em] ml-[4.5em] px-[8px] py-[3px] bg-red-600/80 rounded-full text-white text-xs'>{cartItems.length}</span>}
+          </NextLink>
           { session ? 
             <button
               onClick={() => signOut()}
@@ -91,6 +101,14 @@ const HorizontalHeader = ({path}) => {
                 {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
               </NextLink>
             })}
+            <NextLink
+              href='/cart'
+              className='flex items-center gap-2 px-4 py-2 rounded-md hover:bg-indigo-400/50 relative'
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <MdShoppingCart className='w-5 h-5'/> Cart {cartItems.length > 0 && <span className='absolute top-[.65em]
+              left-[-.75em] px-[8px] py-[3px] bg-red-600/80 rounded-full text-white text-xs'>{cartItems.length}</span>}
+            </NextLink>
           </motion.section>
         </AnimatePresence>
       }

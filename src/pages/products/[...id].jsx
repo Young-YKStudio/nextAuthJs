@@ -5,7 +5,7 @@ import RdxAddToCartButton from '../../../redux/cart/AddCartButton';
 import { Disclosure } from '@headlessui/react';
 
 const ProductPage = (props) => {
-  console.log(props)
+  // console.log(props)
 
   const [ currentImage, setCurrentImage ] = useState(0)
   const [ qty, setQty ] = useState(1)
@@ -13,6 +13,7 @@ const ProductPage = (props) => {
 
   // this product is for dummy purpose, update with DB and models for the future
   const dummyProduct = {
+    id: props.product.id,
     name: props.product.name,
     price: props.product.price,
     images: [
@@ -101,7 +102,7 @@ const ProductPage = (props) => {
           <div className='hidden md:grid grid-cols-4 gap-4 my-4'>
             {dummyProduct.images.length > 0 && dummyProduct.images.map((image, i) => {
               return <div
-                key={i}
+                key={image.name}
                 style={{backgroundImage: `url("${image.src}")`}}
                 className='w-full h-48 lg:h-36 bg-slate-300 rounded-lg hover:cursor-pointer hover:bg-blend-multiply bg-cover bg-center'
                 onClick={() => setCurrentImage(Number(image.id))}
@@ -156,7 +157,7 @@ const ProductPage = (props) => {
         {/* buttons */}
         <div className='flex flex-row flex-nowrap items-center py-4 gap-4'>
           <div className='max-w-sm w-full'>
-            <RdxAddToCartButton item={props.product} qty={qty} />
+            <RdxAddToCartButton item={dummyProduct} qty={qty} />
           </div>
           <div 
             className='p-3 hover:bg-slate-100 rounded-lg text-gray-300 hover:text-indigo-900'

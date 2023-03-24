@@ -1,18 +1,17 @@
 import { useRouter } from 'next/router'
 import RdxAddToCartButton from "../../../redux/cart/AddCartButton";
 
-const ProductCards = ({item, key}) => {
+const ProductCards = ({item, id}) => {
 
   const router = useRouter()
 
   const navigateTo = (id) => {
-    console.log(id)
     router.push(`/products/${id}`)
   }
-
+  
   return (
     <section 
-      key={key}
+      key={id}
       className='w-full h-72 flex flex-col gap-2 text-indigo-900'
     >
       <div 

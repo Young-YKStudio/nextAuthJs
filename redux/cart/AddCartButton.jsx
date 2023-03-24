@@ -1,9 +1,19 @@
 import { MdAddShoppingCart } from 'react-icons/md'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../cartSlice'
 
 const RdxAddToCartButton = ({item, qty}) => {
 
+  const dispatch = useDispatch()
+
   const ATCbutton = (item, qty) => {
-    console.log(item, qty)
+    
+    const productObj = {
+      qty: qty,
+      product: item
+    }
+
+    dispatch(addToCart(productObj))
   }
 
   return (

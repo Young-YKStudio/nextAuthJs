@@ -4,18 +4,6 @@ const initialState = {
   cartItems: [],
 }
 
-// CartItem {
-//   product: Product;
-//   qty: number;
-// }
-
-// Procuct {
-//   id: string,
-//   name: string,
-//   price: number,
-//   image: string,
-// }
-
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -23,21 +11,46 @@ export const cartSlice = createSlice({
     // all actions
     // Cart
     addToCart: (state, action) => {
-      state.items = [...state.items, action.payload]
+      state.cartItems = [...state.cartItems, action.payload]
     },
     removeFromCart: (state, action) => {
-      let foundItem = state.items.find((item) => (item.id === action.payload.id))
-      let newCart = [...state.items]
+      let foundItem = state.cartItems.find((item) => (item.product.id === action.payload.product.id))
+      let filteredCart = state.cartItems.filter((item) => item !== foundItem)
       if (!!foundItem) {
-        newCart.splice(foundItem, 1)
+        state.cartItems = filteredCart
       } 
-      state.items = newCart
     },
+    // increase qty
+    qtyIncrease: (state, action) => {
+      state.cartItems.forEach((item) => {
+        if (item.product.id === action.payload.product.id) {
+          item.qty += 1
+        }
+      })
+    },
+    // decrease qty
+    qtyDecrease: (state, action) => {
+      console.log(action, 'decrease')
+      state.cartItems.forEach((item) => {
+        if(item.product.id === action.payload.product.id) {
+          if(item.qty > 1) {
+            item.qty -= 1
+          } else {
+            item.qty = 1
+          }
+        }
+      })
+    },
+    cartReset: (state, action) => {
+      if(!!action) {
+        state.cartItems = []
+      }
+    }
   }
 })
 
-export const { addToCart, removeFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, cartReset, qtyIncrease, qtyDecrease } = cartSlice.actions
 
-export const selectItems = (state) => state.cartItems.items
+export const selectItems = (state) => state.cart.cartItems
 
 export default cartSlice.reducer
