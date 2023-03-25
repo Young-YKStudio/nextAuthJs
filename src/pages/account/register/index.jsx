@@ -2,6 +2,8 @@ import { useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import Router from 'next/router'
 import { signIn } from 'next-auth/react'
+import { useSelector, useDispatch } from 'react-redux'
+import { register } from '../../../../redux/cartSlice'
 
 const Register = () => {
 
@@ -13,7 +15,8 @@ const Register = () => {
   })
 
   const { name, email, password, passwordConfirm } = registerForm
-  // const { pathname } = Router
+
+  const dispatch = useDispatch()
 
   const formChangeHandler = (e) => {
     setRegisterForm((prev) => ({
@@ -38,19 +41,28 @@ const Register = () => {
   }
 
   const submitHandler = async () => {
-    try {
-      const request = await axios.post('/api/account/register', registerForm)
-      if(request.data) {
-        // save user in redux
-        // redirect to home
-        // login
-        await loginUser()
-        console.log(request.data, 'after registered')
+    if(password !== passwordConfirm) {
+      return
+    } else {
+      const userData = {
+        name, email, password, passwordConfirm
       }
-    } catch (err) {
-      console.log(err.response)
-      // modal to show error
+
+      dispatch(register(userData))
     }
+    // try {
+    //   const request = await axios.post('/api/account/register', registerForm)
+    //   if(request.data) {
+    //     // save user in redux
+    //     // redirect to home
+    //     // login
+    //     await loginUser()
+    //     console.log(request.data, 'after registered')
+    //   }
+    // } catch (err) {
+    //   console.log(err.response)
+    //   // modal to show error
+    // }
   }
 
   return (

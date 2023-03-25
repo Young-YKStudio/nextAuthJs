@@ -1,8 +1,10 @@
 
 import { getProviders, signIn, useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Router from 'next/router';
 import { FcGoogle } from 'react-icons/fc'
+import { useDispatch } from 'react-redux';
+import { checkSession, login } from '../../../../redux/cartSlice';
 
 const Login = ({providers}) => {
   
@@ -13,21 +15,13 @@ const Login = ({providers}) => {
   
   const { email, password } = loginForm
   const { session, status } = useSession()
-
-  console.log(providers)
+  const dispatch = useDispatch()
 
   const formChangeHandler = (e) => {
     setLoginForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value
     }))
-  }
-
-  const redirectToHome = () => {
-    const { pathname } = Router
-    if(pathname === '/account/login') {
-      Router.push('/')
-    }
   }
 
   const redirectToRegister = () => {
@@ -56,22 +50,20 @@ const Login = ({providers}) => {
   )
 
   const submitHandler = async () => {
-    const request = await signIn('credentials', {
-      redirect: false,
-      email: email,
-      password: password,
-      callbackUrl: '/account/login'
-    })
+    const userData = {
+      email, password
+    }
 
-    request.error ? console.log(request.error) : redirectToHome()
+    dispatch(login(userData))
   }
 
-  if(status === 'authenticated') {
-    // redirectToHome()
-    console.log(session, 'success!')
-  } else {
-    console.log('unauth')
-  }
+  useEffect(() => {
+    if(status === 'authenticated') {
+      dispatch(checkSession({email: email}))
+      Router.push('/')
+    }
+  },[status])
+  
 
   return (
     <div className='bg-indigo-100 w-screen h-screen flex justify-center items-center text-indigo-900'>

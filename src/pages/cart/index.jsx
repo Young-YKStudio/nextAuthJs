@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import NextLink from 'next/link'
-import { MdShoppingCart, MdOutlineRemove, MdOutlineAdd } from "react-icons/md";
+import { MdShoppingCart } from "react-icons/md";
 import RdxRemoveFromCartButton from "../../../redux/cart/RemoveCartButton";
 import RdxQtyAddButton from "../../../redux/cart/AddQtyButton";
 import RdxDecreaseQtyButton from "../../../redux/cart/DecreaseQtyButton";

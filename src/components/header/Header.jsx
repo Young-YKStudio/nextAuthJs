@@ -1,7 +1,27 @@
 import VerticalHeader from "./verticalHeader";
 import HorizontalHeader from "./horizontalHeader";
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useDispatch } from "react-redux";
+import { checkSessionAgain } from "../../../redux/cartSlice";
 
-const Header = ({path, session}) => {
+const Header = ({path}) => {
+
+  const { data: session } = useSession()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log(session, 'at header')
+    if(session) {
+      if(!!session.user.image) {
+        console.log('google account user')
+        dispatch(checkSessionAgain(session.user))
+      } else {
+        console.log('email account user')
+      }
+    }
+    
+  },[session])
 
   const HeaderDistributor = () => {
     if(path.includes('/dashboard')) {

@@ -4,6 +4,9 @@ import { useRouter } from 'next/router'
 import Header from '@/components/header/Header'
 import { Provider } from 'react-redux'
 import { store } from '../../redux/store'
+import Spinner from '@/components/spinner/spinner'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function App({ Component, pageProps: {session, ...pageProps} }) {
 
@@ -19,14 +22,24 @@ export default function App({ Component, pageProps: {session, ...pageProps} }) {
 
   return (
   <SessionProvider session={session}>
-    {/* <div className={styleDistributor(pathname)}>
-      <Header path={pathname} />
-      <Component {...pageProps} />
-    </div> */}
     <Provider store={store}>
       <div className={styleDistributor(pathname)}>
+        <Spinner />
         <Header path={pathname} />
+        {/* Modal */}
         <Component {...pageProps} />
+        <ToastContainer 
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </Provider>
   </SessionProvider>

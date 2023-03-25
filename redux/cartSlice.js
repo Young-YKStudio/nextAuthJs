@@ -1,8 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authService from "./service/authService";
+import { toast } from 'react-toastify'
 
 const initialState = {
   cartItems: [],
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  message: ''
 }
+
+// Thunks
+export const register = createAsyncThunk('cart/register', async (user, thunkAPI) => {
+  try {
+    return await authService.register(user)
+  } catch (error) {
+    const message = (error.response.data.error) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const checkSession = createAsyncThunk('cart/checkSession', async (user, thunkAPI) => {
+  try {
+    return await authService.checkSession(user)
+  } catch (error) {
+    const message = (error.response.data.error) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const checkSessionAgain = createAsyncThunk('cart/checkSessionAgain', async (user, thunkAPI) => {
+  try {
+    return await authService.checkSessionAgain(user)
+  } catch (error) {
+    const message = (error.response.data.error) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const logout = createAsyncThunk('cart/logout', async () => {
+  await authService.logout()
+})
+
+export const login = createAsyncThunk('cart/login', async (user, thunkAPI) => {
+  try {
+    return await authService.login(user)
+  } catch (error) {
+    const message = (error.response.data.error) || error.message || error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -45,6 +92,23 @@ export const cartSlice = createSlice({
       if(!!action) {
         state.cartItems = []
       }
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(register.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(register.fulfilled, (state, action) => {
+          state.isLoading = false
+          state.isSuccess = true
+          state.message = action.payload
+        })
+        .addCase(register.rejected, (state, action) => {
+          state.isLoading = false
+          state.error = true
+          state.message = action.payload
+        })
+        .addCase()
     }
   }
 })

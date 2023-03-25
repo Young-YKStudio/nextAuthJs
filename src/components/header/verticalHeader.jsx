@@ -11,8 +11,6 @@ const VerticalHeader = ({path}) => {
   const [ isPopOpen, setIsPopOpen ] = useState(false)
   const { data: session } = useSession()
 
-  console.log(session, 'vertical header')
-
   const styleChange = (state) => {
     if (state) {
       return 'fixed bg-indigo-900 left-[4.5em] top-[1.5em] px-1 py-4 rounded-r-md flex items-center'

@@ -5,6 +5,7 @@ import { MdLogin, MdLogout, MdMenu, MdClose, MdShoppingCart } from 'react-icons/
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSelector } from 'react-redux'
+import { RdxLogOutButton1 } from '../../../redux/auth/logOutButtons'
 
 const HorizontalHeader = ({path}) => {
   const { cartItems } = useSelector((state) => state.cart)
@@ -53,12 +54,7 @@ const HorizontalHeader = ({path}) => {
             <MdShoppingCart className='w-5 h-5'/> Cart {cartItems.length > 0 && <span className='absolute top-[0.85em] ml-[4.5em] px-[8px] py-[3px] bg-red-600/80 rounded-full text-white text-xs'>{cartItems.length}</span>}
           </NextLink>
           { session ? 
-            <button
-              onClick={() => signOut()}
-              className='hover:bg-indigo-400/50 px-4 py-2 rounded-md flex items-center'
-            >
-              <MdLogout className='mr-2 w-5 h-5'/>Logout
-            </button>
+            <RdxLogOutButton1 />
             :
             <NextLink 
               href='/account/login'

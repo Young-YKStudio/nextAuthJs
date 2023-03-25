@@ -18,7 +18,7 @@ export default NextAuth({
           access_type: 'offline',
           response_type: 'code'
         }
-      }
+      },
     }),
     CredentialsProvider({
       id: 'credentials',

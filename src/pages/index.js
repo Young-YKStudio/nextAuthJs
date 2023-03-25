@@ -3,10 +3,6 @@ import { useSession } from 'next-auth/react'
 
 export default function Home() {
 
-  const { session } = useSession()
-  if(session) {
-    console.log(session, 'at index.js')
-  }
   return (
     <>
       <Head>
