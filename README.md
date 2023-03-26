@@ -55,3 +55,23 @@ tailwindcss: 3.2.7
 nodemailer: 6.9.1
 react-redux: 8.0.5
 ```
+
+#### ENV Setting
+
+For initial setup for this template, set up followings for .env requirements.
+
+- Google Auth address
+- MongoDB url
+- NextAuth key
+- Email address and password
+
+```bash
+GOOGLE_CLIENT =
+GOOGLE_SERCRET =
+DATABASE_URL =
+NEXTAUTH_JWT =
+NEXTAUTH_SECRET =
+EMAIL_ACCT =
+EMAIL_PW =
+APP_URL =
+```
