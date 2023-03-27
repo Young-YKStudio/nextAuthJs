@@ -62,8 +62,11 @@ For initial setup for this template, set up followings for .env requirements.
 
 - Google Auth address
 - MongoDB url
-- NextAuth key
 - Email address and password
+- NextAuth jwt and secret, use terminal to generate random key
+```bash
+openssl rand 256 | base64
+```
 
 ```bash
 GOOGLE_CLIENT =

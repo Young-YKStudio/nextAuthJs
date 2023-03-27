@@ -11,13 +11,9 @@ const Header = ({path}) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(session, 'at header')
     if(session) {
       if(!!session.user.image) {
-        console.log('google account user')
         dispatch(checkSessionAgain(session.user))
-      } else {
-        console.log('email account user')
       }
     }
     

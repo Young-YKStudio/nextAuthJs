@@ -41,7 +41,7 @@ export default NextAuth({
         })
 
         if(!user) {
-          return 
+          throw new Error('Check your email') 
         }
 
         const passwordMatch = await compare(
@@ -50,7 +50,7 @@ export default NextAuth({
         )
 
         if(!passwordMatch) {
-          throw new Error('Password do not match')
+          throw new Error('Check your password')
         }
 
         return user

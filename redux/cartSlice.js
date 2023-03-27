@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./service/authService";
-import { toast } from 'react-toastify'
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+import axios from 'axios'
+import Router from 'next/router'
 
 const initialState = {
   cartItems: [],
@@ -11,43 +14,71 @@ const initialState = {
 }
 
 // Thunks
-export const register = createAsyncThunk('cart/register', async (user, thunkAPI) => {
+export const register = createAsyncThunk('cart/register', async (user) => {
+  const loginUser = async () => {
+    const response = await signIn('credentials', {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+      callbackUrl: '/'
+    })
+  }
   try {
-    return await authService.register(user)
+    if(user.password !== user.passwordConfirm) {
+      return toast.warn('Check passwords again')
+    }
+    const request = await axios.post('/api/account/register', user)
+    
+    if(request.data.success) {
+      toast.success('Successfully Registered')
+      await loginUser()
+      Router.push('/')
+      await authService.checkSession(user)
+    }
+    // return await authService.register(user)
   } catch (error) {
-    const message = (error.response.data.error) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return toast.error(`${error.response.data.message}`)
   }
 })
 
-export const checkSession = createAsyncThunk('cart/checkSession', async (user, thunkAPI) => {
+export const checkSession = createAsyncThunk('cart/checkSession', async (user) => {
   try {
     return await authService.checkSession(user)
   } catch (error) {
-    const message = (error.response.data.error) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return toast.error(`${error.response.data.message}`)
   }
 })
 
-export const checkSessionAgain = createAsyncThunk('cart/checkSessionAgain', async (user, thunkAPI) => {
+export const checkSessionAgain = createAsyncThunk('cart/checkSessionAgain', async (user) => {
   try {
     return await authService.checkSessionAgain(user)
   } catch (error) {
-    const message = (error.response.data.error) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return toast.error(`${error.response.data.message}`)
   }
 })
 
 export const logout = createAsyncThunk('cart/logout', async () => {
   await authService.logout()
+  Router.push('/account/login')
 })
 
 export const login = createAsyncThunk('cart/login', async (user, thunkAPI) => {
   try {
-    return await authService.login(user)
+    const request = await signIn('credentials', {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+      callbackUrl: '/account/login'
+    })
+    if(request.error) {
+      toast.error(`${request.error}`)
+    }
+    if(request.ok) {
+      toast.success('login successful')
+    }
+    return request
   } catch (error) {
-    const message = (error.response.data.error) || error.message || error.toString()
-    return thunkAPI.rejectWithValue(message)
+    return toast.error(`${error.response.data.message}`)
   }
 })
 
@@ -93,27 +124,19 @@ export const cartSlice = createSlice({
         state.cartItems = []
       }
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(register.pending, (state) => {
-          state.isLoading = true
-        })
-        .addCase(register.fulfilled, (state, action) => {
-          state.isLoading = false
-          state.isSuccess = true
-          state.message = action.payload
-        })
-        .addCase(register.rejected, (state, action) => {
-          state.isLoading = false
-          state.error = true
-          state.message = action.payload
-        })
-        .addCase()
-    }
+    resetStatus: (state) => {
+      state.isLoading = false
+      state.isSuccess = false
+      state.isError = false
+      state.message = ''
+    },
+    isPending: (state) => {
+      state.isLoading = true
+    },
   }
 })
 
-export const { addToCart, removeFromCart, cartReset, qtyIncrease, qtyDecrease } = cartSlice.actions
+export const { addToCart, removeFromCart, cartReset, qtyIncrease, qtyDecrease, resetStatus, isPending, testLogin } = cartSlice.actions
 
 export const selectItems = (state) => state.cart.cartItems
 

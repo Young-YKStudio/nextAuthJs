@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import axios, { AxiosError } from 'axios'
-import Router from 'next/router'
-import { signIn } from 'next-auth/react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { register } from '../../../../redux/cartSlice'
 
 const Register = () => {
@@ -25,45 +22,14 @@ const Register = () => {
     }))
   }
 
-  const redirectTo = (path) => {
-    Router.push(path)
-  }
-
-  const loginUser = async () => {
-    const response = await signIn('credentials', {
-      redirect: false,
-      email: email,
-      password: password,
-      callbackUrl: `${window.location.origin}`
-    })
-
-    response.error ? console.log(response.error) : redirectTo('/')
-  }
-
   const submitHandler = async () => {
-    if(password !== passwordConfirm) {
-      return
-    } else {
-      const userData = {
-        name, email, password, passwordConfirm
-      }
-
-      dispatch(register(userData))
+    const userData = {
+      name, email, password, passwordConfirm
     }
-    // try {
-    //   const request = await axios.post('/api/account/register', registerForm)
-    //   if(request.data) {
-    //     // save user in redux
-    //     // redirect to home
-    //     // login
-    //     await loginUser()
-    //     console.log(request.data, 'after registered')
-    //   }
-    // } catch (err) {
-    //   console.log(err.response)
-    //   // modal to show error
-    // }
+
+    dispatch(register(userData))
   }
+
 
   return (
     <section className='w-screen h-screen bg-indigo-100 flex items-center justify-center text-indigo-900'>
