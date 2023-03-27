@@ -26,7 +26,7 @@ export default async function ForgotPassword(req, res) {
 
   let emailOptions = {
     from: 'noreply@ykstudio.dev',
-    to: 'kys3923@gmail.com',
+    to: email,
     subject: 'Password Reset Reqeust for Test',
     html: emailContent
   }
@@ -41,20 +41,20 @@ export default async function ForgotPassword(req, res) {
     if(user) {
       try {
         await sendEmail(emailOptions)
-        res.json({
+        res.status(200).json({
           success: true,
           message: 'Email has been sent'
         })
       } catch (e) {
-        res.json({
+        res.status(503).json({
           success: false, 
-          message: 'error at sending email'
+          message: 'Error found at sending email'
         })
       }
     } else {
-      res.json({
+      res.status(400).json({
         success: false,
-        message: 'user not found in DB'
+        message: 'The email address entered is not valid'
       })
     }
 
@@ -64,7 +64,7 @@ export default async function ForgotPassword(req, res) {
       resetPasswordToken: undefined,
       resetPasswordExpire: undefined,
     })
-    res.json({
+    res.status(400).json({
       success: false,
       message: 'Error occured during connecting to DB or sending out email'
     })

@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
+import { toast } from 'react-toastify'
 
 const PasswordReset = () => {
 
@@ -28,7 +29,7 @@ const PasswordReset = () => {
 
   const submitHandler = async () => {
     if (password !== passwordConfirm) {
-      //TODO: modal aleart
+      toast.warn('Please check your passwords')
       return 
     }
 
@@ -42,11 +43,11 @@ const PasswordReset = () => {
       if(request.data) {
         console.log(request.data, 'success reqeust')
         // modal for succes 
+        toast.success('Password has been reset')
         Router.push('/account/login')
       }
     } catch (e) {
-      console.log(e.response)
-      // TODO: modal aleart error
+      return toast.error(`${e.response.data.message}`)
     }
   }
 

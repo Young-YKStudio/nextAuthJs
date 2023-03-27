@@ -60,14 +60,6 @@ react-redux: 8.0.5
 
 For initial setup for this template, set up followings for .env requirements.
 
-- Google Auth address
-- MongoDB url
-- Email address and password
-- NextAuth jwt and secret, use terminal to generate random key
-```bash
-openssl rand 256 | base64
-```
-
 ```bash
 GOOGLE_CLIENT =
 GOOGLE_SERCRET =
@@ -77,4 +69,12 @@ NEXTAUTH_SECRET =
 EMAIL_ACCT =
 EMAIL_PW =
 APP_URL =
+```
+
+- Google Auth address
+- MongoDB url
+- Email address and password
+- NextAuth jwt and secret, use terminal to generate random key
+```bash
+openssl rand 256 | base64
 ```

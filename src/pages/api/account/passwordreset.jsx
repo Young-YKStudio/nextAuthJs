@@ -39,8 +39,7 @@ export default async function PasswordReset(req, res) {
 
       let emailOptions = {
         from: 'noreply@ykstudio.dev',
-        // to: user.email
-        to: 'kys3923@gmail.com',
+        to: user.email,
         subject: 'Password has been changed',
         html: emailContent
       }
@@ -53,7 +52,6 @@ export default async function PasswordReset(req, res) {
           user: user
         })
       } catch (e) {
-        console.log(e)
         return res.status(400).json({
           success: false,
           message: 'Error at sending out email'
@@ -62,7 +60,6 @@ export default async function PasswordReset(req, res) {
     }
     
   } catch (e) {
-    console.log(e)
     res.status(400).json({
       success: false,
       message: 'Error found on connecting to DB'

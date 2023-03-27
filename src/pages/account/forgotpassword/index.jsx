@@ -3,6 +3,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import { MdCheckCircle } from 'react-icons/md'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'react-toastify'
 
 const ForgotPassword = () => {
 
@@ -25,13 +26,12 @@ const ForgotPassword = () => {
     // loading
     try {
       const request = await axios.put('/api/account/forgotpassword', emailForm)
-      console.log(request)
       if(request.data.success) {
+        toast.success('Email has been sent')
         setSuccess(true)
       }
     } catch (e) {
-      console.log(e.response)
-      // modal to show error
+      return toast.error(`${e.response.data.message}`)
     }
   }
 

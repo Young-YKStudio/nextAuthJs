@@ -62,7 +62,7 @@ export const logout = createAsyncThunk('cart/logout', async () => {
   Router.push('/account/login')
 })
 
-export const login = createAsyncThunk('cart/login', async (user, thunkAPI) => {
+export const login = createAsyncThunk('cart/login', async (user) => {
   try {
     const request = await signIn('credentials', {
       redirect: false,
@@ -130,13 +130,10 @@ export const cartSlice = createSlice({
       state.isError = false
       state.message = ''
     },
-    isPending: (state) => {
-      state.isLoading = true
-    },
   }
 })
 
-export const { addToCart, removeFromCart, cartReset, qtyIncrease, qtyDecrease, resetStatus, isPending, testLogin } = cartSlice.actions
+export const { addToCart, removeFromCart, cartReset, qtyIncrease, qtyDecrease, resetStatus, } = cartSlice.actions
 
 export const selectItems = (state) => state.cart.cartItems
 
