@@ -5,7 +5,6 @@ import RdxAddToCartButton from '../../../redux/cart/AddCartButton';
 import { Disclosure } from '@headlessui/react';
 
 const ProductPage = (props) => {
-  // console.log(props)
 
   const [ currentImage, setCurrentImage ] = useState(0)
   const [ qty, setQty ] = useState(1)

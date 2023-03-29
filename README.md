@@ -76,5 +76,5 @@ APP_URL =
 - Email address and password
 - NextAuth jwt and secret, use terminal to generate random key
 ```bash
-openssl rand 256 | base64
+openssl rand -base64 32
 ```

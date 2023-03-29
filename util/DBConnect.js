@@ -17,6 +17,8 @@ async function dbConnect() {
     return cached.conn
   }
 
+  if (mongoose.connection.readyState >= 1) return ;
+
   if(!cached.promise) {
     const opts = {
       bufferCommands: false

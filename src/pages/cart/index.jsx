@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import NextLink from 'next/link'
 import { MdShoppingCart } from "react-icons/md";
 import RdxRemoveFromCartButton from "../../../redux/cart/RemoveCartButton";
@@ -10,7 +10,6 @@ import CartResetButton from "../../../redux/cart/CartResetButton";
 const Cart = () => {
 
   const { cartItems } = useSelector((state) => state.cart)
-  const dispatch = useDispatch()
 
   const [ subtotal, setSubTotal ] = useState(0)
   const [ shipping, setShipping ] = useState(5)

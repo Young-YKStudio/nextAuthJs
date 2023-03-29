@@ -51,8 +51,6 @@ const PasswordReset = () => {
     }
   }
 
-  console.log(resetToken)
-
   return (
     <section className='w-screen h-screen bg-indigo-100 flex items-center justify-center text-indigo-900'>
       <div className='w-96 p-8 rounded-lg bg-white/40 shadow-lg flex flex-col'>

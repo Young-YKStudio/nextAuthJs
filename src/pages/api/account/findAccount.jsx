@@ -5,10 +5,9 @@ export default async function FindAccount(req, res) {
   if (req.method !== 'POST') {
     return res.status(303).json({ error: 'request is not POST'})
   }
-
-
+  
   const { email, password } = req.body
-  // console.log(req.body)
+
   try {
     await dbConnect()
     const user = await User.findOne({email: email})

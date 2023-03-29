@@ -1,4 +1,4 @@
-import { MdHome, MdSpaceDashboard, MdOutlineForwardToInbox, MdSell } from "react-icons/md";
+import { MdSpaceDashboard, MdOutlineForwardToInbox, MdSell, MdAccountCircle } from "react-icons/md";
 
 export const links = [
   {
@@ -6,26 +6,30 @@ export const links = [
     href: '/products',
     icon: <MdSell className="w-5 h-5" />
   },
+]
+
+export const dashboardLinks = [
+  // examples below
+  // {
+  //   name: 'Dashboard',
+  //   href: '/dashboard',
+  //   icon: <MdSpaceDashboard className='w-5 h-5'/>
+  // },
+  // {
+  //   name: 'Login',
+  //   href: '/account/login',
+  // },
+]
+
+export const accountLinks = [
   {
     name: 'Dashboard',
     href: '/dashboard',
     icon: <MdSpaceDashboard className="w-5 h-5" />
   },
-]
-
-export const dashboardLinks = [
   {
-    name: 'Home',
-    href: '/',
-    icon: <MdHome className='w-5 h-5' />
-  },
-  {
-    name: 'Dashboard',
-    href: '/dashboard',
-    icon: <MdSpaceDashboard className='w-5 h-5'/>
-  },
-  {
-    name: 'Login',
-    href: '/account/login',
+    name: 'Account',
+    href: '#',
+    icon: <MdAccountCircle className="w-5 h-5" />
   },
 ]
