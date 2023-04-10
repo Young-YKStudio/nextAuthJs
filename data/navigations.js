@@ -1,10 +1,15 @@
-import { MdSpaceDashboard, MdOutlineForwardToInbox, MdSell, MdAccountCircle } from "react-icons/md";
+import { MdSpaceDashboard, MdShoppingCart, MdSell, MdAccountCircle } from "react-icons/md";
 
 export const links = [
   {
     name: 'Products',
     href: '/products',
     icon: <MdSell className="w-5 h-5" />
+  },
+  {
+    name: 'Cart',
+    href: '/cart',
+    icon: <MdShoppingCart className="w-5 h-5" />
   },
 ]
 

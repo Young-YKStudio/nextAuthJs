@@ -3,10 +3,13 @@ import { useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { toast } from 'react-toastify'
+import { setLoadingOn, setLoadingOff } from '../../../../redux/cartSlice'
+import { useDispatch } from 'react-redux'
 
 const PasswordReset = () => {
 
   const router = useRouter()
+  const dispatch = useDispatch()
   let resetToken = router.query
 
   const [ changePassword, setChangePassword ] = useState({
@@ -39,14 +42,17 @@ const PasswordReset = () => {
     }
 
     try {
+      dispatch(setLoadingOn())
       const request = await axios.put('/api/account/passwordreset', submitForm)
       if(request.data) {
+        dispatch(setLoadingOff())
         console.log(request.data, 'success reqeust')
         // modal for succes 
         toast.success('Password has been reset')
         Router.push('/account/login')
       }
     } catch (e) {
+      dispatch(setLoadingOff())
       return toast.error(`${e.response.data.message}`)
     }
   }

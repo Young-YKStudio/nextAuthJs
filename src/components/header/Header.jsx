@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useDispatch } from "react-redux";
 import { checkSessionAgain } from "../../../redux/cartSlice";
+import Router from 'next/router'
 
 const Header = ({path}) => {
 
@@ -18,6 +19,13 @@ const Header = ({path}) => {
     }
     
   },[session])
+
+  useEffect(() => {
+    if(path.startsWith('/dashboard') && !localStorage.userRole) {
+      Router.push('/account/login')
+    }
+    
+  }, [path])
 
   const HeaderDistributor = () => {
     if(path.includes('/dashboard')) {

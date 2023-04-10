@@ -27,19 +27,11 @@ const HorizontalHeader = ({path}) => {
   }
 
   const ImageDistributor = (user) => {
-    if(user.image) {
-      console.log(user.image, 'link?')
-      return <div 
-        style={{backgroundImage: `url("${user.image}")`}}
-        className='w-7 h-7 rounded-full bg-center bg-cover'
-      />
-    } else{
-      return <div
-        className='w-7 h-7 rounded-full flex justify-center items-center bg-indigo-400 text-white text-md'
-      >
-        {user.name.substring(0, 1).toUpperCase()}
-      </div>
-    }
+    return <div
+      className='w-7 h-7 rounded-full flex justify-center items-center bg-indigo-400 text-white text-md'
+    >
+      {user.name.substring(0, 1).toUpperCase()}
+    </div>
   }
 
   const AccountClickHandler = () => {
@@ -110,45 +102,49 @@ const HorizontalHeader = ({path}) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {links && links.map((link) => {
-              return <NextLink
-                key={link.name}
-                href={link.href}
-                className={buttonStyles(link.href)}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
-              </NextLink>
-            })}
-            <NextLink
-              href='/cart'
-              className='flex items-center gap-2 px-4 py-2 rounded-md hover:bg-indigo-400/50 relative'
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <MdShoppingCart className='w-5 h-5'/> Cart {cartItems.length > 0 && <span className='absolute top-[.65em]
-              left-[-.75em] px-[8px] py-[3px] bg-red-600/80 rounded-full text-white text-xs'>{cartItems.length}</span>}
-            </NextLink>
-            <div
-              className='border-t border-indigo-400 flex flex-col gap-2 pt-2'
-            >
-              { session ?
-                accountLinks && accountLinks.map((link) => {
-                  return <NextLink
-                    key={link.name}
-                    href={link.href}
-                    className={buttonStyles(link.href)}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
-                  </NextLink>
-                })
-                :
-                <NextLink>
+            { session ?
+              <div className='flex flex-col'>
+                <div className='flex flex-row flex-nowrap items-center gap-2 p-2 px-3 border-b border-indigo-400 mb-2'>
+                  {ImageDistributor(session.user)}
+                  <p className='truncate'>{session.user.name}</p>
+                </div>
+                {
+                  links && links.map((link) => {
+                    return <NextLink
+                      key={link.name}
+                      href={link.href}
+                      className={buttonStyles(link.href)}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
+                    </NextLink>
+                  })
+                }
+                <RdxLogOutButton1 />
+              </div>
+              :
+              <div className='flex flex-col gap-2'>
+                {
+                  links && links.map((link) => {
+                    return <NextLink
+                      key={link.name}
+                      href={link.href}
+                      className={buttonStyles(link.href)}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.icon && <span className='mr-2'>{link.icon}</span>}{link.name}
+                    </NextLink>
+                  })
+                }
+                <NextLink
+                  href='/account/login'
+                  className='hover:bg-indigo-400/50 px-4 py-2 rounded-md flex items-center truncate'
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   <MdLogin className='mr-2 w-5 h-5'/>Login
                 </NextLink>
-              }
-            </div>
-            <RdxLogOutButton1 />
+              </div>
+            }
           </motion.section>
         </AnimatePresence>
       }

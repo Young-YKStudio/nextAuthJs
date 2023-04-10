@@ -4,6 +4,8 @@ import Router from 'next/router'
 import { MdCheckCircle } from 'react-icons/md'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { setLoadingOn, setLoadingOff } from '../../../../redux/cartSlice'
 
 const ForgotPassword = () => {
 
@@ -13,6 +15,7 @@ const ForgotPassword = () => {
   const [ success, setSuccess ] = useState(false)
 
   const { email } = emailForm
+  const dispatch = useDispatch()
 
   const formChangeHandler = (e) => {
     setEmailForm((prev) => ({...prev, email: e.target.value }))
@@ -25,12 +28,15 @@ const ForgotPassword = () => {
   const submitHandler = async () => {
     // loading
     try {
+      dispatch(setLoadingOn())
       const request = await axios.put('/api/account/forgotpassword', emailForm)
       if(request.data.success) {
+        dispatch(setLoadingOff())
         toast.success('Email has been sent')
         setSuccess(true)
       }
     } catch (e) {
+      dispatch(setLoadingOff())
       return toast.error(`${e.response.data.message}`)
     }
   }
