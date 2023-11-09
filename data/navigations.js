@@ -11,6 +11,11 @@ export const links = [
     href: '/cart',
     icon: <MdShoppingCart className="w-5 h-5" />
   },
+  {
+    name: 'Tutorial',
+    href: '/sample',
+    icon: <MdShoppingCart className="w-5 h-5" />
+  },
 ]
 
 export const dashboardLinks = [

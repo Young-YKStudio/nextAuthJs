@@ -10,7 +10,7 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   isError: false,
-  message: ''
+  message: '',
 }
 
 // Thunks
@@ -90,6 +90,7 @@ export const cartSlice = createSlice({
     // Cart
     addToCart: (state, action) => {
       state.cartItems = [...state.cartItems, action.payload]
+      // localstorage: 
     },
     removeFromCart: (state, action) => {
       let foundItem = state.cartItems.find((item) => (item.product.id === action.payload.product.id))
